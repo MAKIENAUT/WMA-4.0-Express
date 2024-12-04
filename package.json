@@ -6,14 +6,19 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon index.ts",
+    "dev": "nodemon src/index.ts",
     "prepare": "husky"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "joi": "^17.13.3",
+    "pg": "^8.13.1",
+    "prisma": "^5.22.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
@@ -34,5 +39,6 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
-  }
+  },
+  "keywords": []
 }

@@ -1,9 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyToken } from '../utils/jwt.utils';
+import { verifyToken } from '../../common/utils/jwt.utils';
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction): void => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  let token = req.cookies.token;
+
+  if (!token) {
+    const authHeader = req.headers['authorization'];
+    token = authHeader && authHeader.split(' ')[1];
+  }
 
   if (!token) {
     res.status(401).json({ error: 'No token provided' });
@@ -12,8 +16,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
 
   try {
     const decoded = verifyToken(token);
-    // @ts-ignore
-    req.user = decoded;
+    (req as any).user = decoded;
     next();
   } catch (error) {
     res.status(403).json({ error: 'Invalid or expired token' });
